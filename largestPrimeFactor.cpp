@@ -1,30 +1,46 @@
-
+#include <cmath>
+#include <cstdio>
 #include <vector>
 #include <iostream>
-
+#include <algorithm>
 using namespace std;
+
+
+unsigned long long findPrimeEven(unsigned long long n){
+    while(n % 2 == 0){
+        n = n / 2;
+    }
+    if(n == 1) return 2;
+    return n;
+}
+
 
 int main(){
     int t;
     cin >> t;
     for(int a0 = 0; a0 < t; a0++){
-        long n;
+        unsigned long long n;
+        unsigned long long max;
         cin >> n;
-        vector<bool> numbers(n, true);
-        for(int i = 2; i < numbers.size(); i += 2){
-            numbers[i] = false;
+        n = findPrimeEven(n);
+        unsigned long long i;
+        for(i = 3; i <= sqrt(n); i += 2){
+            if(n % i == 0){
+                n = n / i;
+                i = 1;
+            }
         }
-        for(int i = 4; i < numbers.size(); i += 3){
-            numbers[i] = false;
-        }
-        for(int i = 8; i < numbers.size(); i += 5){
-            numbers[i] = false;
-        }
-        int max = 2;
-        for(int i = 0; i < numbers.size(); i++){
-            if(numbers[i] == true && (n % (i+2) == 0)) max = i + 2;
-        }
+        
+        if (n == 2){
+             max = 2;
+         } else if (n > 2){
+            max = n;
+        }else if(n < 2){
+             max = i;
+         }
+        
         cout << max << endl;
     }
     return 0;
 }
+
